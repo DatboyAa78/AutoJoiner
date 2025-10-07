@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Roblox Brainrot Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #313244;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #89b4fa;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #a6e3a1;
+            color: #1e1e2e;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover {
+            background-color: #94e2d5;
+        }
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Join Brainrot Server</h1>
+        <p>Click to join the Roblox server where Brainrots were found!</p>
+        <button onclick="joinServer()">Join Server Now</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // CONFIG: Replace these with your values
+        const PLACE_ID = 109983668079237;  // Your game's Place ID (e.g., Steal a Brainrot)
+        const JOB_ID = 'PASTE_JOB_ID_HERE';  // Paste the Job ID from the webhook (e.g., 'abc123def456...')
+
+        function joinServer() {
+            const status = document.getElementById('status');
+            if (JOB_ID === 'PASTE_JOB_ID_HERE') {
+                status.textContent = '❌ Please paste the Job ID first!';
+                status.style.color = '#f38ba8';
+                return;
+            }
+
+            const url = `https://www.roblox.com/home?placeId=${PLACE_ID}&jobId=${JOB_ID}`;
+            status.textContent = '🚀 Redirecting to Roblox...';
+            status.style.color = '#a6e3a1';
+            
+            // Auto-redirect after a short delay
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
