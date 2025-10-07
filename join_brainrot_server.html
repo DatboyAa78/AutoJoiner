@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Roblox Brainrot Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #313244;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #89b4fa;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #a6e3a1;
+            color: #1e1e2e;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover {
+            background-color: #94e2d5;
+        }
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        input {
+            width: 80%;
+            max-width: 250px;
+            padding: 8px;
+            margin: 10px;
+            border-radius: 4px;
+            border: 1px solid #89b4fa;
+            background: #1e1e2e;
+            color: #cdd6f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Join Brainrot Server</h1>
+        <p>Click to join the Roblox server where Brainrots were found!</p>
+        <input type="text" id="jobIdInput" placeholder="Enter Job ID (or use URL param)" value="">
+        <br>
+        <button onclick="joinServer()">Join Server Now</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // CONFIG: Replace with your game's Place ID
+        const PLACE_ID = 109983668079237;  // e.g., Steal a Brainrot
+
+        // Extract jobId from URL query param if available
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobIdFromUrl = urlParams.get('jobId');
+        const jobIdInput = document.getElementById('jobIdInput');
+        if (jobIdFromUrl) {
+            jobIdInput.value = jobIdFromUrl;
+        }
+
+        function joinServer() {
+            const status = document.getElementById('status');
+            let jobId = jobIdInput.value.trim();
+            
+            if (!jobId) {
+                status.textContent = '❌ Please enter or provide a Job ID!';
+                status.style.color = '#f38ba8';
+                return;
+            }
+
+            const url = `https://www.roblox.com/home?placeId=${PLACE_ID}&jobId=${jobId}`;
+            status.textContent = '🚀 Redirecting to Roblox...';
+            status.style.color = '#a6e3a1';
+            
+            // Auto-redirect after a short delay
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
+        }
+
+        // Auto-join on page load if jobId is in URL
+        if (jobIdFromUrl) {
+            setTimeout(joinServer, 2000);  // Delay 2s for user to see
+        }
+    </script>
+</body>
+</html>
