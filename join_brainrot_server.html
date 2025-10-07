@@ -3,161 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overseas Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <title>Join Brainrot Server</title>
     <style>
-        body {
+        * {
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e7ff;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #1e1e2e, #2a2a4e, #3b1e5e);
-            background-size: 200% 200%;
-            animation: gradientShift 15s ease infinite;
-            font-family: 'Roboto', sans-serif;
-            color: #cdd6f4;
+            min-height: 100vh;
             overflow: hidden;
         }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         .container {
-            background: rgba(49, 50, 68, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(137, 180, 250, 0.5);
-            text-align: center;
-            max-width: 90%;
-            width: 350px;
+            background: rgba(30, 30, 46, 0.95);
             backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 32px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: #89b4fa;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(137, 180, 250, 0.7);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a5b4fc;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        h1::before {
+            content: '🧠';
+            font-size: 1.5rem;
         }
         p {
-            font-size: 16px;
-            margin: 10px 0;
+            font-size: 1rem;
+            color: #d1d5db;
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
-        input {
-            width: 80%;
-            max-width: 280px;
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 5px;
-            border: 2px solid #89b4fa;
-            background: #1e1e2e;
-            color: #cdd6f4;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input:focus {
-            border-color: #a6e3a1;
+        .status {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            min-height: 24px;
+            margin-top: 16px;
         }
         button {
-            background: linear-gradient(45deg, #a6e3a1, #94e2d5);
-            color: #1e1e2e;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            color: #ffffff;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            max-width: 300px;
-            box-shadow: 0 0 15px rgba(166, 227, 161, 0.7);
-            transition: transform 0.2s, box-shadow 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s;
+        }
+        button:hover::after {
+            left: 100%;
         }
         button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(166, 227, 161, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+            background: linear-gradient(90deg, #6b7280, #9ca3af);
         }
         button:active {
-            transform: scale(0.95);
+            transform: translateY(0);
         }
-        #status {
-            font-size: 14px;
-            margin-top: 15px;
-            min-height: 20px;
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-            button, input {
-                font-size: 16px;
-            }
+        @media (max-width: 480px) {
             .container {
-                padding: 20px;
+                margin: 16px;
+                padding: 24px;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 12px 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧠 Overseas Hub</h1>
-        <p>Join the Roblox server with Brainrot models!</p>
-        <input type="text" id="jobIdInput" placeholder="Enter Job ID (or use URL param)" value="">
-        <br>
+        <h1>Join Brainrot Server</h1>
+        <p>Join Rare Brainrot server</p>
         <button onclick="joinServer()">Join Server Now</button>
-        <p id="status"></p>
+        <p class="status" id="status"></p>
     </div>
 
     <script>
-        // CONFIG: Replace with your game's Place ID
-        const PLACE_ID = 109983668079237;  // e.g., Steal a Brainrot
-
-        // Extract and sanitize jobId from URL query param
-        const urlParams = new URLSearchParams(window.location.search);
-        let jobIdFromUrl = urlParams.get('jobId');
-        if (jobIdFromUrl) {
-            // Sanitize to prevent XSS or invalid characters
-            jobIdFromUrl = jobIdFromUrl.replace(/[^a-zA-Z0-9\-]/g, '');
-        }
-        const jobIdInput = document.getElementById('jobIdInput');
-        const status = document.getElementById('status');
-
-        // Populate input with jobId if valid
-        if (jobIdFromUrl) {
-            jobIdInput.value = jobIdFromUrl;
-            status.textContent = '✅ Job ID loaded from URL!';
-            status.style.color = '#a6e3a1';
-        } else {
-            status.textContent = '⚠️ No Job ID in URL, enter manually.';
-            status.style.color = '#f9e2af';
-        }
+        // CONFIG: Replace JOB_ID with your value
+        const PLACE_ID = 109983668079237;  // Confirmed Place ID for the game
+        const JOB_ID = 'PASTE_JOB_ID_HERE';  // Paste the Job ID from the webhook (e.g., 'abc123def456...')
 
         function joinServer() {
-            let jobId = jobIdInput.value.trim();
-            
-            // Validate jobId
-            if (!jobId || jobId.length < 10) {  // Basic length check for Roblox Job IDs
-                status.textContent = '❌ Invalid Job ID! Please enter a valid ID.';
-                status.style.color = '#f38ba8';
+            const status = document.getElementById('status');
+
+            // Validate PLACE_ID and JOB_ID
+            if (!PLACE_ID || isNaN(PLACE_ID) || PLACE_ID <= 0) {
+                status.textContent = '❌ Invalid Place ID!';
+                status.style.color = '#f87171';
+                return;
+            }
+            if (!JOB_ID || JOB_ID === 'PASTE_JOB_ID_HERE') {
+                status.textContent = '❌ Please paste a valid Job ID!';
+                status.style.color = '#f87171';
                 return;
             }
 
-            const url = `https://www.roblox.com/home?placeId=${PLACE_ID}&jobId=${encodeURIComponent(jobId)}`;
+            // Use the URL format: https://www.roblox.com/games/start?placeId=...&jobId=...
+            const webUrl = `https://www.roblox.com/games/start?placeId=${PLACE_ID}&jobId=${JOB_ID}`;
+            // Fallback for Roblox client
+            const robloxUrl = `roblox://placeId=${PLACE_ID}&jobId=${JOB_ID}`;
+
             status.textContent = '🚀 Redirecting to Roblox...';
-            status.style.color = '#a6e3a1';
-            
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1000);
+            status.style.color = '#4ade80';
+
+            // Attempt to open in Roblox client first
+            try {
+                window.location.href = robloxUrl;
+                // Fallback to web URL after a short delay if the client doesn't open
+                setTimeout(() => {
+                    window.location.href = webUrl;
+                }, 1500);
+            } catch (error) {
+                // If roblox:// fails, immediately try the web URL
+                window.location.href = webUrl;
+            }
         }
 
-        // Auto-join if valid jobId is provided in URL
-        if (jobIdFromUrl && jobIdFromUrl.length >= 10) {
-            setTimeout(joinServer, 2000);
-        }
+        // Optional: Auto-join on page load if you want
+        // window.onload = joinServer;
     </script>
 </body>
 </html>
-
