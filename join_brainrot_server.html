@@ -55,6 +55,26 @@
             margin-bottom: 24px;
             line-height: 1.5;
         }
+        .input-container {
+            margin-bottom: 24px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e7ff;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+        input[type="text"]::placeholder {
+            color: #9ca3af;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+        }
         .status {
             font-size: 0.875rem;
             color: #d1d5db;
@@ -115,34 +135,45 @@
     <div class="container">
         <h1>Join Brainrot Server</h1>
         <p>Join Rare Brainrot server</p>
+        <div class="input-container">
+            <input type="text" id="jobIdInput" placeholder="Enter Job ID (optional)">
+        </div>
         <button onclick="joinServer()">Join Server Now</button>
         <p class="status" id="status"></p>
     </div>
 
     <script>
-        // CONFIG: Replace JOB_ID with your value
         const PLACE_ID = 109983668079237;  // Confirmed Place ID for the game
-        const JOB_ID = 'PASTE_JOB_ID_HERE';  // Paste the Job ID from the webhook (e.g., 'abc123def456...')
+
+        // Get Job ID from URL parameter if present
+        function getJobIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('jobId') || '';
+        }
+
+        // Set initial Job ID value from URL
+        const jobIdInput = document.getElementById('jobIdInput');
+        jobIdInput.value = getJobIdFromUrl();
 
         function joinServer() {
             const status = document.getElementById('status');
+            const jobId = jobIdInput.value.trim() || getJobIdFromUrl();
 
-            // Validate PLACE_ID and JOB_ID
+            // Validate PLACE_ID
             if (!PLACE_ID || isNaN(PLACE_ID) || PLACE_ID <= 0) {
                 status.textContent = '❌ Invalid Place ID!';
                 status.style.color = '#f87171';
                 return;
             }
-            if (!JOB_ID || JOB_ID === 'PASTE_JOB_ID_HERE') {
-                status.textContent = '❌ Please paste a valid Job ID!';
-                status.style.color = '#f87171';
-                return;
-            }
 
-            // Use the URL format: https://www.roblox.com/games/start?placeId=...&jobId=...
-            const webUrl = `https://www.roblox.com/games/start?placeId=${PLACE_ID}&jobId=${JOB_ID}`;
-            // Fallback for Roblox client
-            const robloxUrl = `roblox://placeId=${PLACE_ID}&jobId=${JOB_ID}`;
+            // Construct URLs
+            let webUrl = `https://www.roblox.com/games/start?placeId=${PLACE_ID}`;
+            let robloxUrl = `roblox://placeId=${PLACE_ID}`;
+            
+            if (jobId) {
+                webUrl += `&jobId=${encodeURIComponent(jobId)}`;
+                robloxUrl += `&jobId=${encodeURIComponent(jobId)}`;
+            }
 
             status.textContent = '🚀 Redirecting to Roblox...';
             status.style.color = '#4ade80';
@@ -159,9 +190,6 @@
                 window.location.href = webUrl;
             }
         }
-
-        // Optional: Auto-join on page load if you want
-        // window.onload = joinServer;
     </script>
 </body>
 </html>
