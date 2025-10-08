@@ -6,6 +6,7 @@
     <title>Overseas Hub Autojoiner</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Original styles unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -279,6 +280,16 @@
                 gap: 12px;
             }
         }
+        /* New styles for the convert button */
+        .convert-button {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            margin-top: 16px;
+        }
+        .convert-button:hover {
+            box-shadow: 
+                0 12px 32px rgba(52, 211, 153, 0.4),
+                0 4px 12px rgba(0, 0, 0, 0.15);
+        }
     </style>
 </head>
 <body>
@@ -297,10 +308,21 @@
         </div>
 
         <div class="input-container">
+            <label class="input-label" for="hexInput">
+                <i class="fas fa-code"></i> Hex Job ID
+            </label>
+            <input type="text" id="hexInput" placeholder="Enter hex string (e.g., 734F4970...)">
+        </div>
+
+        <button class="convert-button" onclick="convertHexToJobId()">
+            <i class="fas fa-exchange-alt"></i> Convert to Job ID
+        </button>
+
+        <div class="input-container">
             <label class="input-label" for="jobIdInput">
                 <i class="fas fa-hashtag"></i> Server Job ID (Optional)
             </label>
-            <input type="text" id="jobIdInput" placeholder="Enter specific server ID...">
+            <input type="text" id="jobIdInput" placeholder="Enter or convert to server Job ID...">
         </div>
 
         <button onclick="joinServer()">
@@ -369,6 +391,47 @@
             return urlParams.get('jobId') || '';
         }
 
+        // Convert hex string to formatted Job ID
+        function convertHexToJobId() {
+            const hexInput = document.getElementById('hexInput');
+            const jobIdInput = document.getElementById('jobIdInput');
+            const status = document.getElementById('status');
+            const hex = hexInput.value.trim().toUpperCase();
+
+            // Validate hex string
+            if (!hex.match(/^[0-9A-F]+$/i)) {
+                status.textContent = '❌ Invalid hex string! Use only 0-9 and A-F.';
+                status.className = 'status error';
+                return;
+            }
+
+            // Format hex string (e.g., group into 8-4-4-4-12 for UUID-like format)
+            let formattedJobId = '';
+            if (hex.length >= 32) {
+                // Assuming a UUID-like format for readability
+                formattedJobId = [
+                    hex.slice(0, 8),
+                    hex.slice(8, 12),
+                    hex.slice(12, 16),
+                    hex.slice(16, 20),
+                    hex.slice(20, 32)
+                ].join('-');
+            } else {
+                // For shorter strings, group by 4 characters
+                formattedJobId = hex.match(/.{1,4}/g)?.join('-') || hex;
+            }
+
+            jobIdInput.value = formattedJobId;
+            status.textContent = '✅ Hex converted to Job ID!';
+            status.className = 'status success';
+
+            // Reset status after 3 seconds
+            setTimeout(() => {
+                status.textContent = 'Ready to connect...';
+                status.className = 'status';
+            }, 3000);
+        }
+
         // Set initial Job ID value from URL
         const jobIdInput = document.getElementById('jobIdInput');
         jobIdInput.value = getJobIdFromUrl();
@@ -380,6 +443,13 @@
             // Validate PLACE_ID
             if (!PLACE_ID || isNaN(PLACE_ID) || PLACE_ID <= 0) {
                 status.textContent = '❌ Invalid Place ID!';
+                status.className = 'status error';
+                return;
+            }
+
+            // Validate Job ID format (optional, depending on your requirements)
+            if (jobId && !jobId.match(/^[0-9A-F-]{36}$/i)) {
+                status.textContent = '❌ Invalid Job ID format! Use converted Job ID or valid UUID.';
                 status.className = 'status error';
                 return;
             }
@@ -397,7 +467,7 @@
             status.className = 'status success';
 
             // Add loading animation to button
-            const button = document.querySelector('button');
+            const button = document.querySelector('button:not(.convert-button)');
             const originalText = button.innerHTML;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
             button.disabled = true;
@@ -424,10 +494,16 @@
         // Initialize particles when page loads
         document.addEventListener('DOMContentLoaded', createParticles);
 
-        // Add enter key support for the input
+        // Add enter key support for inputs
         jobIdInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 joinServer();
+            }
+        });
+
+        document.getElementById('hexInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                convertHexToJobId();
             }
         });
     </script>
